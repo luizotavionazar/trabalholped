@@ -11,7 +11,7 @@ public class App {
         System.out.println("─────────────────────────");
         System.out.println(" > [1] Gerar senha       ");
 
-        if (!fila.isEmpty()) {
+        if (!fila.isEmpty()) { //Alterar condiução após criar a fila certa
             System.out.println(" > [2] Chamar senha      ");
             System.out.println(" > [3] Ver senhas        ");
             System.out.println(" > [4] Buscar senha      ");
@@ -43,8 +43,8 @@ public class App {
 
     }
 
-    public boolean verificar_acesso(int opc){
-    if (fila.isEmpty()) { //Alterar condição
+    public boolean verificar_acesso(int opc){ //Alterar os parâmetros após criar as variaveis necessárias
+    if (fila.isEmpty()) { //Alterar condiução após criar a fila certa
         if (opc==2||
             opc==3||
             opc==4||
@@ -80,30 +80,30 @@ public class App {
                 control= false;
                 break;
             case 1:
-                
+                metodo.adicionar_senha();
                 break;
             case 2:
     
-                if (func.verificar_acesso(opc)) {
-                    }
+                if (metodo.verificar_acesso(opc)) {
+                    metodo.remover_senha();}
     
                 break;
             case 3:
     
-                if (func.verificar_acesso(opc)) {
-                    }
+                if (metodo.verificar_acesso(opc)) {
+                    metodo.listar_senhas();}
     
                 break;
             case 4:
     
-                if (func.verificar_acesso(opc)) {
-                    }
+                if (metodo.verificar_acesso(opc)) {
+                    metodo.pesquisar_senha();}
     
                 break;
             case 5:
 
-                if (func.verificar_acesso(opc)) {
-                    }
+                if (metodo.verificar_acesso(opc)) {
+                    metodo.limpa_arquivo();}
 
             break;
             default:
