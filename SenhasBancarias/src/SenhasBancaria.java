@@ -3,7 +3,7 @@ import java.util.InputMismatchException;
 import java.util.Queue;
 import java.util.Scanner;
 
-public class App {
+public class SenhasBancaria {
     public void menu() {
         System.out.println("");
         System.out.println("─────────────────────────");
@@ -11,7 +11,7 @@ public class App {
         System.out.println("─────────────────────────");
         System.out.println(" > [1] Gerar senha       ");
 
-        if (!fila.isEmpty()) { //Alterar condiução após criar a fila certa
+        if (!fila.isEmpty()) { //Alterar condição após criar a fila certa
             System.out.println(" > [2] Chamar senha      ");
             System.out.println(" > [3] Ver senhas        ");
             System.out.println(" > [4] Buscar senha      ");
@@ -44,7 +44,7 @@ public class App {
     }
 
     public boolean verificar_acesso(int opc){ //Alterar os parâmetros após criar as variaveis necessárias
-    if (fila.isEmpty()) { //Alterar condiução após criar a fila certa
+    if (fila.isEmpty()) { //Alterar condição após criar a fila certa
         if (opc==2||
             opc==3||
             opc==4||
@@ -56,7 +56,7 @@ public class App {
 
     public static void main(String[] args) throws Exception {
     Scanner in= new Scanner(System.in);       
-    App metodo= new App();
+    SenhasBancaria metodo= new SenhasBancaria();
     
     boolean control= true, control1= true;
     int opc= 0;
