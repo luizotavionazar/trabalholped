@@ -1,10 +1,12 @@
-import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
+import java.io.*;
 
 public class SenhasBancaria {
-    public void menu() {
+
+    public void menu(Queue<String> fila) {
         System.out.println("");
         System.out.println("─────────────────────────");
         System.out.println("   CONTROLE DE SENHAS    ");
@@ -23,27 +25,7 @@ public class SenhasBancaria {
         System.out.print("Escolha a opção desejada: "); 
     }
 
-    public void adicionar_senha() {
-
-    }
-
-    public void remover_senha() { //subscrever não é a mesma coisa de substituir
-
-    }
-
-    public void listar_senhas() {
-
-    }
-
-    public void pesquisar_senha() {
-
-    }
-
-    public void limpa_arquivo() {
-
-    }
-
-    public boolean verificar_acesso(int opc){ //Alterar os parâmetros após criar as variaveis necessárias
+    public boolean verificar_acesso(int opc, Queue<String> fila){ //Alterar os parâmetros após criar as variaveis necessárias
     if (fila.isEmpty()) { //Alterar condição após criar a fila certa
         if (opc==2||
             opc==3||
@@ -55,16 +37,28 @@ public class SenhasBancaria {
     return true; }
 
     public static void main(String[] args) throws Exception {
-    Scanner in= new Scanner(System.in);       
-    SenhasBancaria metodo= new SenhasBancaria();
-    
-    boolean control= true, control1= true;
-    int opc= 0;
+        String caminhoarquivo = "BDsenhas.txt";
+        File arquivo = new File(caminhoarquivo);
+        try {
+            if (arquivo.createNewFile()){
+        }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-    while (control) {
+        Scanner in= new Scanner(System.in);       
+        SenhasBancaria metodo= new SenhasBancaria();
+        Gerarsenha metodoGerarsenha = new Gerarsenha();
+        Queue<String> fila = new LinkedList<>();
+
+        boolean control= true, control1= true;
+        int opc= 0, senha = 0;
+        String prioridade = null;
+
+        while (control) {
 
         do {
-            metodo.menu();
+            metodo.menu(fila);
             try {
                 opc= in.nextInt();
                 control1= true;
@@ -80,30 +74,30 @@ public class SenhasBancaria {
                 control= false;
                 break;
             case 1:
-                metodo.adicionar_senha();
+                metodoGerarsenha.gerarsenha(senha);
                 break;
             case 2:
     
-                if (metodo.verificar_acesso(opc)) {
-                    metodo.remover_senha();}
+                if (metodo.verificar_acesso(opc, fila)) {
+                    }
     
                 break;
             case 3:
     
-                if (metodo.verificar_acesso(opc)) {
-                    metodo.listar_senhas();}
+                if (metodo.verificar_acesso(opc, fila)) {
+                    }
     
                 break;
             case 4:
     
-                if (metodo.verificar_acesso(opc)) {
-                    metodo.pesquisar_senha();}
+                if (metodo.verificar_acesso(opc, fila)) {
+                    }
     
                 break;
             case 5:
 
-                if (metodo.verificar_acesso(opc)) {
-                    metodo.limpa_arquivo();}
+                if (metodo.verificar_acesso(opc, fila)) {
+                    }
 
             break;
             default:
