@@ -37,23 +37,20 @@ public class SenhasBancaria {
     return true; }
 
     public static void main(String[] args) throws Exception {
-        String caminhoarquivo = "BDsenhas.txt";
+        String caminhoarquivo= "BDsenhas.txt";
         File arquivo = new File(caminhoarquivo);
         try {
-            if (arquivo.createNewFile()){
-        }
+            if (arquivo.createNewFile()){}
         } catch (IOException e) {
-            e.printStackTrace();
-        }
+            e.printStackTrace();}
 
         Scanner in= new Scanner(System.in);       
         SenhasBancaria metodo= new SenhasBancaria();
-        Gerarsenha metodoGerarsenha = new Gerarsenha();
-        Queue<String> fila = new LinkedList<>();
+        GerarSenha metodo1= new GerarSenha();
+        Queue<String> fila= new LinkedList<>();
 
         boolean control= true, control1= true;
-        int opc= 0, senha = 0;
-        String prioridade = null;
+        int opc= 0, seque = 0;
 
         while (control) {
 
@@ -74,7 +71,7 @@ public class SenhasBancaria {
                 control= false;
                 break;
             case 1:
-                metodoGerarsenha.gerarsenha(senha);
+                seque= metodo1.gerar_senha(in, seque);
                 break;
             case 2:
     
@@ -105,5 +102,4 @@ public class SenhasBancaria {
                 System.out.println("Opção inválida!");
                 break;  }}
 
-    in.close();}
-}
+    in.close();}}
