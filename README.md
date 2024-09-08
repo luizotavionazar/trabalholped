@@ -1,2 +1,4 @@
-# trabalholped
-Trabalho Final LPED, gerenciador de senhas bancarias
+# Gerenciador de Senhas Bancárias
+
+Trabalho Final de LPED
+Desenvolvedores: Luiz Otávio e Jhonnie
