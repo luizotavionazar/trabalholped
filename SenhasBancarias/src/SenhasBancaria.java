@@ -40,7 +40,11 @@ public class SenhasBancaria {
         String caminhoarquivo= "BDsenhas.txt";
         File arquivo = new File(caminhoarquivo);
         try {
-            if (arquivo.createNewFile()){}
+            if (arquivo.createNewFile()){
+                FileWriter escreveArquivo = new FileWriter("BDsenhas.txt", true); // true para adicionar ao final do arquivo
+                escreveArquivo.write("SENHA, CPF/CNPJ, DATA GERAÇÃO, SE FOI CHAMADA: 0- NÃO 1- SIM\n────────────────────────────────────────────────────────────\n"); // Escreve a senha e adiciona uma nova linha
+                escreveArquivo.close(); // Fecha o arquivo após escrever
+            }
         } catch (IOException e) {
             e.printStackTrace();}
 
