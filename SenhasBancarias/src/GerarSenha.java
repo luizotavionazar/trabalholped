@@ -69,6 +69,8 @@ public class GerarSenha {
 
         LocalDateTime horario= LocalDateTime.now(); //Captura da Data e Hora
         DateTimeFormatter horario_format= DateTimeFormatter.ofPattern("dd/MM/YYYY HH:mm:ss ");
+        DateTimeFormatter horaAtual= DateTimeFormatter.ofPattern("dd/MM/YYYY");
+        String diaHoje= horario.format(horaAtual);
         String hora= horario.format(horario_format);
         String senha= null, registro= null;
 
@@ -82,33 +84,37 @@ public class GerarSenha {
         else {
             registro= senha+", null, "+hora+", 0"; }
 
-        String caminhoArquivo= "BDsenhas.txt";
+        String caminhoArquivo= "BDsenhas.txt", ultimaData= null;
+        char ultimoCaractere= 0;
         try { //Escreve o registro no Banco de Dados
             FileWriter escreveArquivo = new FileWriter("BDsenhas.txt", true); //True para adicionar ao final do arquivo, não sobscrevendo os dados
             escreveArquivo.write(registro + "\n");
             escreveArquivo.close();
 
             try(BufferedReader ler = new BufferedReader(new FileReader(caminhoArquivo))) { //Varre as senhas gravadas no BD, para assim carregar a fila atual
-            String linha= null, ultimaLinha = null, ultimoRegistro= null;
-            char ultimoCaractere= 0;
+            String linha= null, ultimaLinha = null;
             
                 while((linha= ler.readLine()) != null){ //Verifica se a tupla esta vazia
                     ultimaLinha= linha;}
                 if (ultimaLinha!= null) { //Captura ultimo caractere para verificar se a senha já foi chamada
                     ultimoCaractere= ultimaLinha.charAt(ultimaLinha.length()-1); }
                     
-                if (ultimaLinha.matches("[A-Za-z]{2}\\d{2}, \\w+, \\d{2}/\\d{2}/\\d{4} \\d{2}:\\d{2}:\\d{2} .*")) { //Captura da Data/Hora do último registro da Sacola
-                    String[] campos = ultimaLinha.split(", "); //Divide a linha em campos, usando a vírgula como separador (0 = senha, 1 = CPF, 2 = data)
-                    ultimoRegistro= campos[2]; }
-                
-                if (ultimoCaractere=='0') { //Adiciona na fila se a senha não foi chamad
-                    fila.add(senha); }} //CORRIGIR PREENCHIMENTO DA FILA
+                if (ultimaLinha.matches("[A-Za-z]{2}\\d{2}, \\w+, \\d{2}/\\d{2}/\\d{4} \\d{2}:\\d{2}:\\d{2} .*")) { //Captura da Data do último registro do BD
+                    String[] campos= ultimaLinha.split(", "); //Divide a linha em campos, usando a vírgula como separador (0 = senha, 1 = CPF, 2 = data)
+                    String[] dataHora = campos[2].split(" ");  // Divide o campo de data e hora usando o espaço como separador
+                    ultimaData = dataHora[0];  // Captura apenas a data (primeira parte antes do espaço)
+                    }
+                else {
+                    System.out.println("teste 1");
+                }
 
-            for (int i = 0; i < 20; i++) {
-                System.out.println("");
-                System.out.println(fila.peek());
-                System.out.println("");
-            }
+                if (ultimoCaractere=='0' &&
+                    ultimaData.equals(diaHoje)) { //Adiciona na fila se a senha não foi chamada
+                    fila.offer(senha); }} //FILA ESTA PREENCHENDO CONFORME CONDIÇÃO, POREM, APENAS O ULTIMO REGISTRO DO ARQUIVO
+
+                    System.out.println(ultimoCaractere);
+                    System.out.println(ultimaData);
+                    System.out.println(diaHoje);
 
             System.out.println("");
             System.out.println(" > Sucesso!");
@@ -116,5 +122,9 @@ public class GerarSenha {
         } catch (IOException e) {
             System.out.println("Ocorreu um erro ao salvar a senha!");
             System.out.print("Descrição: "); e.printStackTrace(); }
+
+            for (String elemento : fila) {
+                System.out.println(elemento);
+            }
             
         return seque; }}
