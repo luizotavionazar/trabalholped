@@ -54,9 +54,26 @@ public class SenhasBancaria {
         Queue<String> fila= new LinkedList<>();
 
         boolean control= true, control1= true;
-        int opc= 0, seque = 0;
+        int opc= 0, seque=0;
+        
+        try(BufferedReader ler = new BufferedReader(new FileReader(caminhoarquivo))){//leitura da ultima senha, para atualizar na sequencia
+            String linha;
+            String ultimalinha = null;
 
-        while (control) {
+            while((linha = ler.readLine()) != null){
+                ultimalinha = linha;
+            }
+            if (ultimalinha != null){
+                if (ultimalinha.matches("[A-Za-z]{2}\\d{2}.*")) {
+                    String numerosenha = ultimalinha.substring(2, 4);
+                    seque=Integer.parseInt(numerosenha);
+                }
+            }else{
+                seque=0;
+            }
+        }
+        
+        while (control) {// repetição do menu de opções
 
         do {
             metodo.menu(fila);
