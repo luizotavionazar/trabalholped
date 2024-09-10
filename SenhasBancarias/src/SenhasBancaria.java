@@ -5,15 +5,14 @@ import java.util.Scanner;
 import java.io.*;
 
 public class SenhasBancaria {
-
-    public void menu(Queue<String> fila) {
+    public void menu(Queue<String> fila) { //Visualização do Menu
         System.out.println("");
         System.out.println("─────────────────────────");
         System.out.println("   CONTROLE DE SENHAS    ");
         System.out.println("─────────────────────────");
         System.out.println(" > [1] Gerar senha       ");
 
-        if (!fila.isEmpty()) { //Alterar condição após criar a fila certa
+        if (!fila.isEmpty()) { //Exibe as opções apenas quando existe senha gerada
             System.out.println(" > [2] Chamar senha      ");
             System.out.println(" > [3] Ver senhas        ");
             System.out.println(" > [4] Buscar senha      ");
@@ -22,11 +21,10 @@ public class SenhasBancaria {
         System.out.println(" > [0] Sair              ");
         System.out.println("─────────────────────────");
         System.out.println("");
-        System.out.print("Escolha a opção desejada: "); 
-    }
+        System.out.print("Escolha a opção desejada: "); }
 
-    public boolean verificar_acesso(int opc, Queue<String> fila){ //Alterar os parâmetros após criar as variaveis necessárias
-    if (fila.isEmpty()) { //Alterar condição após criar a fila certa
+    public boolean verificar_acesso(int opc, Queue<String> fila){ //Verifica se existe senhas na fila, para utilizar as opções 2 a 5 do menu
+    if (fila.isEmpty()) {
         if (opc==2||
             opc==3||
             opc==4||
@@ -37,90 +35,84 @@ public class SenhasBancaria {
     return true; }
 
     public static void main(String[] args) throws Exception {
-        String caminhoarquivo= "BDsenhas.txt";
-        File arquivo = new File(caminhoarquivo);
-        try {
-            if (arquivo.createNewFile()){
-                FileWriter escreveArquivo = new FileWriter("BDsenhas.txt", true); // true para adicionar ao final do arquivo
-                escreveArquivo.write("SENHA, CPF/CNPJ, DATA GERAÇÃO, SE FOI CHAMADA: 0- NÃO 1- SIM\n────────────────────────────────────────────────────────────\n"); // Escreve a senha e adiciona uma nova linha
-                escreveArquivo.close(); // Fecha o arquivo após escrever
-            }
+        String caminhoArquivo= "BDsenhas.txt";
+        File arquivo = new File(caminhoArquivo);
+        try { //Na 1º execução, cria o Banco de Dados das senhas, incluindo uma orientação de como o usuário lê o arquivo
+            if (arquivo.createNewFile()){ 
+                FileWriter escreveArquivo = new FileWriter("BDsenhas.txt", true);
+                escreveArquivo.write("SENHA, CPF/CNPJ, DATA GERAÇÃO, SE FOI CHAMADA: 0- NÃO 1- SIM\n────────────────────────────────────────────────────────────\n");
+                escreveArquivo.close(); }
         } catch (IOException e) {
             e.printStackTrace();}
 
         Scanner in= new Scanner(System.in);       
         SenhasBancaria metodo= new SenhasBancaria();
-        GerarSenha metodo1= new GerarSenha();
+        GerarSenha gerar= new GerarSenha();
         Queue<String> fila= new LinkedList<>();
 
         boolean control= true, control1= true;
         int opc= 0, seque=0;
         
-        try(BufferedReader ler = new BufferedReader(new FileReader(caminhoarquivo))){//leitura da ultima senha, para atualizar na sequencia
-            String linha;
-            String ultimalinha = null;
+        try(BufferedReader ler = new BufferedReader(new FileReader(caminhoArquivo))){ //Verifica última senha gravada no BD, para assim atualizar a sequência
+            String linha= null;
+            String ultimaLinha = null;
 
-            while((linha = ler.readLine()) != null){
-                ultimalinha = linha;
-            }
-            if (ultimalinha != null){
-                if (ultimalinha.matches("[A-Za-z]{2}\\d{2}.*")) {
-                    String numerosenha = ultimalinha.substring(2, 4);
-                    seque=Integer.parseInt(numerosenha);
-                }
-            }else{
-                seque=0;
-            }
-        }
+            while((linha= ler.readLine()) != null){ //Verifica se a tupla esta vazia
+                ultimaLinha= linha;}
+
+            if (ultimaLinha != null){
+                if (ultimaLinha.matches("[A-Za-z]{2}\\d{2}.*")) { //Ignora os 2 primeiros caracteres do registro, captura o 3º e 4º para obter a sequência e ignora o resto
+                    String ultimoNum= ultimaLinha.substring(2, 4);
+                    seque=Integer.parseInt(ultimoNum); }}}
         
-        while (control) {// repetição do menu de opções
+        while (control) { //Núcleo do programa, chamada das funcionalidades
 
-        do {
-            metodo.menu(fila);
-            try {
-                opc= in.nextInt();
-                control1= true;
-            } catch (InputMismatchException e) {
-                System.out.println("");
-                System.out.println("Informe um valor válido!");
-                control1= false; }
-            in.nextLine();
-        } while (!control1);
-    
-        switch (opc) {
-            case 0:
-                control= false;
+            do { //Entrada com teste de preenchimento inteiro
+                metodo.menu(fila);
+                try {
+                    opc= in.nextInt();
+                    control1= true;
+                } catch (InputMismatchException e) {
+                    System.out.println("");
+                    System.out.println("Informe um valor válido!");
+                    control1= false; }
+                in.nextLine();
+            } while (!control1);
+        
+            switch (opc) {
+                case 0:
+                    control= false;
+                    break;
+                case 1:
+                    seque= gerar.gerar_senha(in, seque);
+                    break;
+                case 2:
+            
+                    if (metodo.verificar_acesso(opc, fila)) {
+                        }
+                    
+                    break;
+                case 3:
+                    
+                    if (metodo.verificar_acesso(opc, fila)) {
+                        }
+                    
+                    break;
+                case 4:
+                    
+                    if (metodo.verificar_acesso(opc, fila)) {
+                        }
+                    
+                    break;
+                case 5:
+                    
+                    if (metodo.verificar_acesso(opc, fila)) {
+                        }
+                    
                 break;
-            case 1:
-                seque= metodo1.gerar_senha(in, seque);
-                break;
-            case 2:
-    
-                if (metodo.verificar_acesso(opc, fila)) {
-                    }
-    
-                break;
-            case 3:
-    
-                if (metodo.verificar_acesso(opc, fila)) {
-                    }
-    
-                break;
-            case 4:
-    
-                if (metodo.verificar_acesso(opc, fila)) {
-                    }
-    
-                break;
-            case 5:
-
-                if (metodo.verificar_acesso(opc, fila)) {
-                    }
-
-            break;
-            default:
-                System.out.println("");
-                System.out.println("Opção inválida!");
-                break;  }}
+                default:
+                    System.out.println("");
+                    System.out.println("Opção inválida!");
+                    break;  }}
 
     in.close();}}
