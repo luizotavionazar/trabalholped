@@ -4,9 +4,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import java.util.InputMismatchException;
+import java.util.Queue;
 
 public class GerarSenha {
-    public int gerar_senha(Scanner in, int seque){
+    public int gerar_senha(Scanner in, int seque, Queue<String> fila){
         boolean control= true, control1= true;
         int opc= 0;
         long ident= 0;
@@ -82,6 +83,7 @@ public class GerarSenha {
         else {
             registro= senha+", null, "+hora+", 0"; }
 
+        fila.offer(senha);
         try { //Escreve o registro no Banco de Dados
             FileWriter escreveArquivo = new FileWriter("BDsenhas.txt", true); //True para adicionar ao final do arquivo, não sobscrevendo os dados
             escreveArquivo.write(registro + "\n");

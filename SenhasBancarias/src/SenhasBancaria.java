@@ -48,6 +48,7 @@ public class SenhasBancaria {
         Scanner in= new Scanner(System.in);       
         SenhasBancaria metodo= new SenhasBancaria();
         GerarSenha gerar= new GerarSenha();
+        ChamarSenha chamar= new ChamarSenha();
         Queue<String> fila= new LinkedList<>();
 
         boolean control= true, control1= true;
@@ -84,11 +85,12 @@ public class SenhasBancaria {
                     control= false;
                     break;
                 case 1:
-                    seque= gerar.gerar_senha(in, seque);
+                    seque= gerar.gerar_senha(in, seque, fila);
                     break;
                 case 2:
             
                     if (metodo.verificar_acesso(opc, fila)) {
+                        chamar.chamar_senha(fila);
                         }
                     
                     break;
