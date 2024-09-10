@@ -54,8 +54,7 @@ public class SenhasBancaria {
         int opc= 0, seque=0;
         
         try(BufferedReader ler = new BufferedReader(new FileReader(caminhoArquivo))){ //Verifica última senha gravada no BD, para assim atualizar a sequência
-            String linha= null;
-            String ultimaLinha = null;
+            String linha= null, ultimaLinha = null;
 
             while((linha= ler.readLine()) != null){ //Verifica se a tupla esta vazia
                 ultimaLinha= linha;}
@@ -84,7 +83,7 @@ public class SenhasBancaria {
                     control= false;
                     break;
                 case 1:
-                    seque= gerar.gerar_senha(in, seque);
+                    seque= gerar.gerar_senha(in, seque, fila);
                     break;
                 case 2:
             

@@ -1,12 +1,12 @@
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import java.util.InputMismatchException;
+import java.util.Queue;
 
 public class GerarSenha {
-    public int gerar_senha(Scanner in, int seque){
+    public int gerar_senha(Scanner in, int seque, Queue<String> fila){
         boolean control= true, control1= true;
         int opc= 0;
         long ident= 0;
@@ -76,16 +76,39 @@ public class GerarSenha {
             senha= prioridade+"0"+seque; }
         else {
             senha= prioridade+seque; }
-
+ 
         if (prioridade.equals("CL")) { //Montagem do registro da senha com todas as suas informações
             registro= senha+", "+ident+", "+hora+", 0"; }
         else {
             registro= senha+", null, "+hora+", 0"; }
 
+        String caminhoArquivo= "BDsenhas.txt";
         try { //Escreve o registro no Banco de Dados
             FileWriter escreveArquivo = new FileWriter("BDsenhas.txt", true); //True para adicionar ao final do arquivo, não sobscrevendo os dados
             escreveArquivo.write(registro + "\n");
             escreveArquivo.close();
+
+            try(BufferedReader ler = new BufferedReader(new FileReader(caminhoArquivo))) { //Varre as senhas gravadas no BD, para assim carregar a fila atual
+            String linha= null, ultimaLinha = null, ultimoRegistro= null;
+            char ultimoCaractere= 0;
+            
+                while((linha= ler.readLine()) != null){ //Verifica se a tupla esta vazia
+                    ultimaLinha= linha;}
+                if (ultimaLinha!= null) { //Captura ultimo caractere para verificar se a senha já foi chamada
+                    ultimoCaractere= ultimaLinha.charAt(ultimaLinha.length()-1); }
+                    
+                if (ultimaLinha.matches("[A-Za-z]{2}\\d{2}, \\w+, \\d{2}/\\d{2}/\\d{4} \\d{2}:\\d{2}:\\d{2} .*")) { //Captura da Data/Hora do último registro da Sacola
+                    String[] campos = ultimaLinha.split(", "); //Divide a linha em campos, usando a vírgula como separador (0 = senha, 1 = CPF, 2 = data)
+                    ultimoRegistro= campos[2]; }
+                
+                if (ultimoCaractere=='0') { //Adiciona na fila se a senha não foi chamad
+                    fila.add(senha); }} //CORRIGIR PREENCHIMENTO DA FILA
+
+            for (int i = 0; i < 20; i++) {
+                System.out.println("");
+                System.out.println(fila.peek());
+                System.out.println("");
+            }
 
             System.out.println("");
             System.out.println(" > Sucesso!");
