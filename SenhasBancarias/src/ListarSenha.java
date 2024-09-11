@@ -47,6 +47,7 @@ public class ListarSenha {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                control=false;
                 break;
             case 2:
                 try (BufferedReader ler = new BufferedReader(new FileReader(caminhoArquivo))){
@@ -62,6 +63,7 @@ public class ListarSenha {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                control=false;
                 break;
             case 3:
                 try (BufferedReader ler = new BufferedReader(new FileReader(caminhoArquivo))){
@@ -79,8 +81,8 @@ public class ListarSenha {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                control=false;
                 break;
-        
             default:
                 break;
         }}

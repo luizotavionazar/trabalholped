@@ -16,7 +16,8 @@ public class SenhasBancaria {
             System.out.println(" > [2] Chamar senha      ");
             System.out.println(" > [3] Ver senhas        ");
             System.out.println(" > [4] Buscar senha      ");
-            System.out.println(" > [5] Limpar BD         "); }
+            System.out.println(" > [5] Alterar senha     ");
+            System.out.println(" > [6] Limpar BD         "); }
 
         System.out.println(" > [0] Sair              ");
         System.out.println("─────────────────────────");
@@ -51,6 +52,7 @@ public class SenhasBancaria {
         ChamarSenha chamar= new ChamarSenha();
         ListarSenha listar= new ListarSenha();
         LimparTerminal cls= new LimparTerminal();
+        AlterarSenha alterar= new AlterarSenha();
         Queue<String> fila= new LinkedList<>();
 
         boolean control= true, control1= true;
@@ -118,7 +120,15 @@ public class SenhasBancaria {
                 case 5:
                     
                     if (metodo.verificar_acesso(opc, fila)) {
+                        alterar.alterarSenha(in);
                         }
+                    
+                break;
+                case 6:
+                    
+                    if (metodo.verificar_acesso(opc, fila)) {
+
+                    }
                     
                 break;
                 default:
