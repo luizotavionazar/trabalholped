@@ -13,6 +13,14 @@ public class GerarSenha {
         int opc= 0;
         long ident= 0;
         String prioridade= null;
+        String dataHora= null;
+        //definição do horário para registro de senhas
+        LocalDateTime horario= LocalDateTime.now(); //Captura da Data e Hora
+        DateTimeFormatter data= DateTimeFormatter.ofPattern("dd/MM/YYYY");
+        DateTimeFormatter hora= DateTimeFormatter.ofPattern("HH:mm:ss");
+        String dataHoje= horario.format(data);
+        String horaAgora= horario.format(hora);
+        dataHora= dataHoje+", "+horaAgora;
 
         while (control) {
             System.out.println(""); //Visualização das opções de gerar senha
@@ -69,20 +77,18 @@ public class GerarSenha {
                     break;  }}
         seque++;
 
-        LocalDateTime horario= LocalDateTime.now(); //Captura da Data e Hora
-        DateTimeFormatter horario_format= DateTimeFormatter.ofPattern("dd/MM/YYYY HH:mm:ss ");
-        String hora= horario.format(horario_format);
         String senha= null, registro= null;
 
         if (seque<10) { //Adiciona 0 a esquerda quando a sequência possui 1 digito
             senha= prioridade+"0"+seque; }
         else {
             senha= prioridade+seque; }
-
+        
+        
         if (prioridade.equals("CL")) { //Montagem do registro da senha com todas as suas informações
-            registro= senha+", "+ident+", "+hora+", 0"; }
+            registro= senha+", "+ident+", "+dataHora+", 0"; }
         else {
-            registro= senha+", null, "+hora+", 0"; }
+            registro= senha+", null, "+dataHora+", 0"; }
 
         fila.offer(senha);
         try { //Escreve o registro no Banco de Dados
