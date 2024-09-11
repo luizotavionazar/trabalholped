@@ -84,7 +84,6 @@ public class GerarSenha {
         else {
             senha= prioridade+seque; }
         
-        
         if (prioridade.equals("CL")) { //Montagem do registro da senha com todas as suas informações
             registro= senha+", "+ident+", "+dataHora+", 0"; }
         else {

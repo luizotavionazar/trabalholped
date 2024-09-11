@@ -26,72 +26,73 @@ public class AlterarSenha {
             System.out.println(" > [3] PR - Preferencial      ");
             System.out.println("──────────────────────────────");
             System.out.println("");
-            System.out.print("Selecione o tipo da senha que você quer alterar e para qual você vai alterar: \n > ");
-            
-            do { //Entrada com teste de preenchimento inteiro
-                try {
-                    opc= in.nextInt();
-                } catch (InputMismatchException e) {
-                    System.out.println("");
-                    System.out.println("Informe um valor válido!");
-                    control1= false; }
-                in.nextLine();
-            } while (!control1);
-            
-            switch (opc) {
-                case 1:
-                    control=false;
-                    prioridade="NC";
-                    break;
-                case 2:
-                    novoCPF=null;
-                    control=false;
-                    prioridade="CL";
-                    break;
-                case 3:
-                    control=false;
-                    prioridade="PR";
-                    break;
-                default:
-                    cls.limpar_tela();
-                    System.out.println("");
-                    System.out.println("Opção inválida!");
-                    break;
-            }
-            do { //Entrada com teste de preenchimento inteiro
-                try {
-                    System.out.print(" > ");
-                    opc2= in.nextInt();
-                    control1= true;
-                } catch (InputMismatchException e) {
-                    System.out.println("");
-                    System.out.println("Informe um valor válido!");
-                    control1= false; }
-                in.nextLine();
-            } while (!control1);
-            switch (opc2) {
-                case 1:
-                    novoCPF=null;
-                    control=false;
-                    prioridade2="NC";
-                    break;
-                case 2:
-                    System.out.print("Informe o seu CPF/CNPJ: ");
-                    novoCPF=in.nextLine();
-                    control=false;
-                    prioridade2="CL";
-                    break;
-                case 3:
-                    novoCPF=null;
-                    control=false;    
-                    prioridade2="PR";
-                    break;
-                default:
-                    cls.limpar_tela();
-                    System.out.println("");
-                    System.out.println("Opção inválida!");
-                    break;
-            }
+            System.out.println("Selecione o tipo da senha que você quer alterar e para qual você vai alterar:");
+            while(control){
+                do { //Entrada com teste de preenchimento inteiro
+                    try {
+                        System.out.print(" > ");
+                        opc= in.nextInt();
+                    } catch (InputMismatchException e) {
+                        System.out.println("");
+                        System.out.println("Informe um valor válido!");
+                        control1= false; }
+                    in.nextLine();
+                } while (!control1);
+                
+                switch (opc) {
+                    case 1:
+                        control=false;
+                        prioridade="NC";
+                        break;
+                    case 2:
+                        novoCPF=null;
+                        control=false;
+                        prioridade="CL";
+                        break;
+                    case 3:
+                        control=false;
+                        prioridade="PR";
+                        break;
+                    default:
+                        System.out.println("");
+                        System.out.println("Opção inválida!");
+                        break;
+                }}
+                control=true;
+            while(control){
+                do { //Entrada com teste de preenchimento inteiro
+                    try {
+                        System.out.print(" > ");
+                        opc2= in.nextInt();
+                        control1= true;
+                    } catch (InputMismatchException e) {
+                        System.out.println("");
+                        System.out.println("Informe um valor válido!");
+                        control1= false; }
+                    in.nextLine();
+                } while (!control1);
+                switch (opc2) {
+                    case 1:
+                        novoCPF=null;
+                        control=false;
+                        prioridade2="NC";
+                        break;
+                    case 2:
+                        System.out.print("Informe o seu CPF/CNPJ: ");
+                        novoCPF=in.nextLine();
+                        control=false;
+                        prioridade2="CL";
+                        break;
+                    case 3:
+                        novoCPF=null;
+                        control=false;    
+                        prioridade2="PR";
+                        break;
+                    default:
+                        System.out.println("");
+                        System.out.println("Opção inválida!");
+                        break;
+                }}
         }
         cls.limpar_tela();
         try (BufferedReader ler = new BufferedReader(new FileReader(arquivo));

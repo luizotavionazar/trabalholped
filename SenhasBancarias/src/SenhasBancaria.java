@@ -35,6 +35,19 @@ public class SenhasBancaria {
     return true; }
 
     public static void main(String[] args) throws Exception {
+        Scanner in= new Scanner(System.in);       
+        SenhasBancaria metodo= new SenhasBancaria();
+        GerarSenha gerar= new GerarSenha();
+        ChamarSenha chamar= new ChamarSenha();
+        ListarSenha listar= new ListarSenha();
+        LimparTerminal cls= new LimparTerminal();
+        AlterarSenha alterar= new AlterarSenha();
+        Queue<String> fila= new LinkedList<>();
+        PreencherFila capturaFila = new PreencherFila();
+
+        boolean control= true, control1= true;
+        int opc= 0, seque=0;
+
         String caminhoArquivo= "BDsenhas.txt";
         File arquivo = new File(caminhoArquivo);
         try { //Na 1º execução, cria o Banco de Dados das senhas, incluindo uma orientação de como o usuário lê o arquivo
@@ -44,18 +57,6 @@ public class SenhasBancaria {
                 escreveArquivo.close(); }
         } catch (IOException e) {
             e.printStackTrace();}
-
-        Scanner in= new Scanner(System.in);       
-        SenhasBancaria metodo= new SenhasBancaria();
-        GerarSenha gerar= new GerarSenha();
-        ChamarSenha chamar= new ChamarSenha();
-        ListarSenha listar= new ListarSenha();
-        LimparTerminal cls= new LimparTerminal();
-        AlterarSenha alterar= new AlterarSenha();
-        Queue<String> fila= new LinkedList<>();
-
-        boolean control= true, control1= true;
-        int opc= 0, seque=0;
         
         try(BufferedReader ler = new BufferedReader(new FileReader(caminhoArquivo))){ //Verifica última senha gravada no BD, para assim atualizar a sequência
             String linha= null;
@@ -68,8 +69,6 @@ public class SenhasBancaria {
                 if (ultimaLinha.matches("[A-Za-z]{2}\\d{2}.*")) { //Ignora os 2 primeiros caracteres do registro, captura o 3º e 4º para obter a sequência e ignora o resto
                     String ultimoNum= ultimaLinha.substring(2, 4);
                     seque=Integer.parseInt(ultimoNum); }}}
-
-        PreencherFila capturaFila = new PreencherFila();
 
         capturaFila.recebeFila(fila);// Preenche a fila com senhas do último dia que não foram chamadas
         
@@ -103,16 +102,14 @@ public class SenhasBancaria {
                     }
                     break;
                 case 3:
-                    
+
                     if (metodo.verificar_acesso(opc, fila)) {
                         listar.listar_senha(in);
                     }    
-                    
                     break;
                 case 4:
                     
                     if (metodo.verificar_acesso(opc, fila)) {
-                        
                         try (FileWriter writer = new FileWriter(caminhoArquivo, false)) { //Limpa o arquivo de texto
                         seque=0;
                         } catch (IOException e) {
@@ -130,11 +127,9 @@ public class SenhasBancaria {
                     if (metodo.verificar_acesso(opc, fila)) {
                         alterar.alterarSenha(in);
                         }
-                    
                 break;
                 default:
                     System.out.println("");
                     System.out.println("Opção inválida!");
                     break;  }}
-
     in.close();}}
