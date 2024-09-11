@@ -35,12 +35,16 @@ public class ListarSenha {
                     in.nextLine();
                 } while (!control1);
             
+            cls.limpar_tela();
             switch (opc) {
                 case 0:
                     control= false;
                     cls.limpar_tela();
                     break;
                 case 1:
+                    System.out.println("");
+                    System.out.println("Senhas não chamadas");
+                    System.out.println("");
                     try (BufferedReader ler = new BufferedReader(new FileReader(caminhoArquivo))){
                         String linha;
                         
@@ -54,6 +58,9 @@ public class ListarSenha {
                         e.printStackTrace(); }
                     break;
                 case 2:
+                    System.out.println("");
+                    System.out.println("Senhas chamadas");
+                    System.out.println("");
                     try (BufferedReader ler = new BufferedReader(new FileReader(caminhoArquivo))){
                         String linha;
                         
@@ -68,6 +75,9 @@ public class ListarSenha {
                         e.printStackTrace(); }
                     break;
                 case 3:
+                    System.out.println("");
+                    System.out.println("Todas as senhas geradas");
+                    System.out.println("");
                     try (BufferedReader ler = new BufferedReader(new FileReader(caminhoArquivo))) {
                         String linha;
                         

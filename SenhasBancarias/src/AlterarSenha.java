@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class AlterarSenha {
     public void alterarSenha(Scanner in){
+        LimparTerminal cls= new LimparTerminal();
         boolean control= true, control1= true;
         int opc=0, opc2=0;
         String senha=null;
@@ -30,10 +31,6 @@ public class AlterarSenha {
             do { //Entrada com teste de preenchimento inteiro
                 try {
                     opc= in.nextInt();
-                    in.nextLine();
-                    System.out.print(" > ");
-                    opc2= in.nextInt();
-                    control1= true;
                 } catch (InputMismatchException e) {
                     System.out.println("");
                     System.out.println("Informe um valor válido!");
@@ -56,10 +53,22 @@ public class AlterarSenha {
                     prioridade="PR";
                     break;
                 default:
+                    cls.limpar_tela();
                     System.out.println("");
                     System.out.println("Opção inválida!");
                     break;
             }
+            do { //Entrada com teste de preenchimento inteiro
+                try {
+                    System.out.print(" > ");
+                    opc2= in.nextInt();
+                    control1= true;
+                } catch (InputMismatchException e) {
+                    System.out.println("");
+                    System.out.println("Informe um valor válido!");
+                    control1= false; }
+                in.nextLine();
+            } while (!control1);
             switch (opc2) {
                 case 1:
                     novoCPF=null;
@@ -78,11 +87,13 @@ public class AlterarSenha {
                     prioridade2="PR";
                     break;
                 default:
+                    cls.limpar_tela();
                     System.out.println("");
                     System.out.println("Opção inválida!");
                     break;
             }
         }
+        cls.limpar_tela();
         try (BufferedReader ler = new BufferedReader(new FileReader(arquivo));
         BufferedWriter escrever = new BufferedWriter(new FileWriter(arquivo2))){
         String linha; // variável para receber as linhas do arquivo
@@ -102,6 +113,7 @@ public class AlterarSenha {
                 }else {
                 String[]campo = linha.split(", ");
                     if (campo[0].equals(senha)) {   
+                        System.out.println("\nAlterção bem sucedida!");
                         System.out.println("Senha alterada de "+prioridade+" para "+prioridade2);
                         String novasenha = linha.replaceFirst(prioridade, prioridade2);
                         if (prioridade2.equals("CL")&& novoCPF != null) {
