@@ -1,16 +1,19 @@
 import java.io.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import java.util.InputMismatchException;
 import java.util.Queue;
 
 public class GerarSenha {
     public int gerar_senha(Scanner in, int seque, Queue<String> fila){
+        DataHora capturaDataHora= new DataHora();
+        PreencherFila capturaSenha= new PreencherFila();
         boolean control= true, control1= true;
         int opc= 0;
         long ident= 0;
         String prioridade= null;
+
+        String dataHora= null;
+        dataHora= capturaDataHora.horario(dataHora); //Captura da Data e Hora
 
         while (control) {
             System.out.println(""); //Visualização das opções de gerar senha
@@ -67,11 +70,6 @@ public class GerarSenha {
                     break;  }}
         seque++;
 
-        LocalDateTime horario= LocalDateTime.now(); //Captura da Data e Hora
-        DateTimeFormatter horario_format= DateTimeFormatter.ofPattern("dd/MM/YYYY HH:mm:ss ");
-        DateTimeFormatter horaAtual= DateTimeFormatter.ofPattern("dd/MM/YYYY");
-        String diaHoje= horario.format(horaAtual);
-        String hora= horario.format(horario_format);
         String senha= null, registro= null;
 
         if (seque<10) { //Adiciona 0 a esquerda quando a sequência possui 1 digito
@@ -80,41 +78,14 @@ public class GerarSenha {
             senha= prioridade+seque; }
  
         if (prioridade.equals("CL")) { //Montagem do registro da senha com todas as suas informações
-            registro= senha+", "+ident+", "+hora+", 0"; }
+            registro= senha+", "+ident+", "+dataHora+", 0"; }
         else {
-            registro= senha+", null, "+hora+", 0"; }
-
-        String caminhoArquivo= "BDsenhas.txt", ultimaData= null;
-        char ultimoCaractere= 0;
+            registro= senha+", null, "+dataHora+", 0"; }
+        
         try { //Escreve o registro no Banco de Dados
             FileWriter escreveArquivo = new FileWriter("BDsenhas.txt", true); //True para adicionar ao final do arquivo, não sobscrevendo os dados
             escreveArquivo.write(registro + "\n");
             escreveArquivo.close();
-
-            try(BufferedReader ler = new BufferedReader(new FileReader(caminhoArquivo))) { //Varre as senhas gravadas no BD, para assim carregar a fila atual
-            String linha= null, ultimaLinha = null;
-            
-                while((linha= ler.readLine()) != null){ //Verifica se a tupla esta vazia
-                    ultimaLinha= linha;}
-                if (ultimaLinha!= null) { //Captura ultimo caractere para verificar se a senha já foi chamada
-                    ultimoCaractere= ultimaLinha.charAt(ultimaLinha.length()-1); }
-                    
-                if (ultimaLinha.matches("[A-Za-z]{2}\\d{2}, \\w+, \\d{2}/\\d{2}/\\d{4} \\d{2}:\\d{2}:\\d{2} .*")) { //Captura da Data do último registro do BD
-                    String[] campos= ultimaLinha.split(", "); //Divide a linha em campos, usando a vírgula como separador (0 = senha, 1 = CPF, 2 = data)
-                    String[] dataHora = campos[2].split(" ");  // Divide o campo de data e hora usando o espaço como separador
-                    ultimaData = dataHora[0];  // Captura apenas a data (primeira parte antes do espaço)
-                    }
-                else {
-                    System.out.println("teste 1");
-                }
-
-                if (ultimoCaractere=='0' &&
-                    ultimaData.equals(diaHoje)) { //Adiciona na fila se a senha não foi chamada
-                    fila.offer(senha); }} //FILA ESTA PREENCHENDO CONFORME CONDIÇÃO, POREM, APENAS O ULTIMO REGISTRO DO ARQUIVO
-
-                    System.out.println(ultimoCaractere);
-                    System.out.println(ultimaData);
-                    System.out.println(diaHoje);
 
             System.out.println("");
             System.out.println(" > Sucesso!");
@@ -122,9 +93,5 @@ public class GerarSenha {
         } catch (IOException e) {
             System.out.println("Ocorreu um erro ao salvar a senha!");
             System.out.print("Descrição: "); e.printStackTrace(); }
-
-            for (String elemento : fila) {
-                System.out.println(elemento);
-            }
             
         return seque; }}

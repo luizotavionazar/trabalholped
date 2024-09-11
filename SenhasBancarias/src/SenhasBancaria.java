@@ -63,6 +63,18 @@ public class SenhasBancaria {
                 if (ultimaLinha.matches("[A-Za-z]{2}\\d{2}.*")) { //Ignora os 2 primeiros caracteres do registro, captura o 3º e 4º para obter a sequência e ignora o resto
                     String ultimoNum= ultimaLinha.substring(2, 4);
                     seque=Integer.parseInt(ultimoNum); }}}
+
+        PreencherFila capturaFila = new PreencherFila();
+    
+        // Preenche a fila com senhas do último dia que não foram chamadas
+        capturaFila.recebeFila(fila);
+    
+        // Exibe a fila de senhas
+        for (String senha : fila) {
+            System.out.println("Senha na fila: " + senha);
+        }
+        System.out.println(fila.size());
+                    
         
         while (control) { //Núcleo do programa, chamada das funcionalidades
 
