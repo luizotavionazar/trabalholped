@@ -49,6 +49,8 @@ public class SenhasBancaria {
         SenhasBancaria metodo= new SenhasBancaria();
         GerarSenha gerar= new GerarSenha();
         ChamarSenha chamar= new ChamarSenha();
+        ListarSenha listar= new ListarSenha();
+        LimparTerminal cls= new LimparTerminal();
         Queue<String> fila= new LinkedList<>();
 
         boolean control= true, control1= true;
@@ -79,7 +81,8 @@ public class SenhasBancaria {
                     control1= false; }
                 in.nextLine();
             } while (!control1);
-        
+            cls.limpar_tela();
+            System.out.println("");
             switch (opc) {
                 case 0:
                     control= false;
@@ -97,6 +100,7 @@ public class SenhasBancaria {
                 case 3:
                     
                     if (metodo.verificar_acesso(opc, fila)) {
+                        listar.listar_senha(in);
                         }
                     
                     break;

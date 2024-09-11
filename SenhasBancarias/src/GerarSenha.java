@@ -8,6 +8,7 @@ import java.util.Queue;
 
 public class GerarSenha {
     public int gerar_senha(Scanner in, int seque, Queue<String> fila){
+        LimparTerminal cls= new LimparTerminal();
         boolean control= true, control1= true;
         int opc= 0;
         long ident= 0;
@@ -88,7 +89,7 @@ public class GerarSenha {
             FileWriter escreveArquivo = new FileWriter("BDsenhas.txt", true); //True para adicionar ao final do arquivo, não sobscrevendo os dados
             escreveArquivo.write(registro + "\n");
             escreveArquivo.close();
-
+            cls.limpar_tela();
             System.out.println("");
             System.out.println(" > Sucesso!");
             System.out.println(" > Sua senha é: "+senha);
