@@ -72,8 +72,7 @@ public class SenhasBancaria {
 
         PreencherFila capturaFila = new PreencherFila();
 
-        // Preenche a fila com senhas do último dia que não foram chamadas
-        capturaFila.recebeFila(fila);
+        capturaFila.recebeFila(fila);// Preenche a fila com senhas do último dia que não foram chamadas
         
         while (control) { //Núcleo do programa, chamada das funcionalidades
 
@@ -96,19 +95,20 @@ public class SenhasBancaria {
                     break;
                 case 1:
                     seque= gerar.gerar_senha(in, seque, fila);
+                    cls.limpar_tela();
                     break;
                 case 2:
             
                     if (metodo.verificar_acesso(opc, fila)) {
                         chamar.chamar_senha(fila);
-                        }
+                        cls.limpar_tela();}
                     
                     break;
                 case 3:
                     
                     if (metodo.verificar_acesso(opc, fila)) {
                         listar.listar_senha(in);
-                        }
+                        cls.limpar_tela();}
                     
                     break;
                 case 4:
@@ -130,7 +130,7 @@ public class SenhasBancaria {
 
                     }
                     
-                break;
+                    break;
                 default:
                     System.out.println("");
                     System.out.println("Opção inválida!");
