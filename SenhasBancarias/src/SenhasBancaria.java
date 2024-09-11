@@ -15,8 +15,8 @@ public class SenhasBancaria {
         if (!fila.isEmpty()) { //Exibe as opções apenas quando existe senha gerada
             System.out.println(" > [2] Chamar senha      ");
             System.out.println(" > [3] Ver senhas        ");
-            System.out.println(" > [4] Limpar BD         ");
-            System.out.println(" > [5] Alterar senha     ");}
+            System.out.println(" > [4] Alterar senha     ");
+            System.out.println(" > [5] Limpar BD         ");}
 
         System.out.println(" > [0] Sair              ");
         System.out.println("─────────────────────────");
@@ -71,6 +71,9 @@ public class SenhasBancaria {
                     seque=Integer.parseInt(ultimoNum); }}}
 
         capturaFila.recebeFila(fila);// Preenche a fila com senhas do último dia que não foram chamadas
+        for (String elemento : fila) {
+            System.out.println(elemento);
+        }
         
         while (control) { //Núcleo do programa, chamada das funcionalidades
 
@@ -85,6 +88,7 @@ public class SenhasBancaria {
                     control1= false; }
                 in.nextLine();
             } while (!control1);
+            
             cls.limpar_tela();
             System.out.println("");
             switch (opc) {
@@ -93,22 +97,27 @@ public class SenhasBancaria {
                     break;
                 case 1:
                     seque= gerar.gerar_senha(in, seque, fila);
-                    
                     break;
                 case 2:
             
                     if (metodo.verificar_acesso(opc, fila)) {
-                        chamar.chamar_senha(fila);
-                    }
+                        chamar.chamar_senha(fila); }
+
                     break;
                 case 3:
 
                     if (metodo.verificar_acesso(opc, fila)) {
-                        listar.listar_senha(in);
-                    }    
+                        listar.listar_senha(in); }    
+
                     break;
                 case 4:
-                    
+
+                if (metodo.verificar_acesso(opc, fila)) {
+                    alterar.alterarSenha(in); }
+
+                    break;
+                case 5:
+                                            
                     if (metodo.verificar_acesso(opc, fila)) {
                         try (FileWriter writer = new FileWriter(caminhoArquivo, false)) { //Limpa o arquivo de texto
                         seque=0;
@@ -119,14 +128,8 @@ public class SenhasBancaria {
                             escreveArquivo.close();
 
                         while (fila.size()>0) {
-                            fila.poll();}}
+                            fila.poll(); }}
                     
-                    break;
-                case 5:
-                    
-                    if (metodo.verificar_acesso(opc, fila)) {
-                        alterar.alterarSenha(in);
-                        }
                 break;
                 default:
                     System.out.println("");

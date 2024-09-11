@@ -5,10 +5,10 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ListarSenha {
-    public void listar_senha(Scanner in){
+    public void listar_senha(Scanner in) {
+        LimparTerminal cls= new LimparTerminal();
         String caminhoArquivo= "BDsenhas.txt";
         boolean control= true, control1= true;
-        LimparTerminal cls= new LimparTerminal();
         int opc= 0, numerolinha=0;
 
         while (control) {
@@ -32,10 +32,11 @@ public class ListarSenha {
                         System.out.println("");
                         System.out.println("Informe um valor válido!");
                         control1= false; }
-                    in.nextLine();
+                in.nextLine();
                 } while (!control1);
             
             cls.limpar_tela();
+
             switch (opc) {
                 case 0:
                     control= false;
@@ -43,8 +44,9 @@ public class ListarSenha {
                     break;
                 case 1:
                     System.out.println("");
-                    System.out.println("Senhas não chamadas");
+                    System.out.println("Senhas não chamadas:");
                     System.out.println("");
+
                     try (BufferedReader ler = new BufferedReader(new FileReader(caminhoArquivo))){
                         String linha;
                         
@@ -56,12 +58,13 @@ public class ListarSenha {
                             
                     } catch (IOException e) {
                         e.printStackTrace(); }
+
                     break;
                 case 2:
                     System.out.println("");
-                    System.out.println("Senhas chamadas");
+                    System.out.println("Senhas chamadas: ");
                     System.out.println("");
-                    try (BufferedReader ler = new BufferedReader(new FileReader(caminhoArquivo))){
+                    try (BufferedReader ler= new BufferedReader(new FileReader(caminhoArquivo))){
                         String linha;
                         
                         while((linha= ler.readLine()) != null){
@@ -76,16 +79,16 @@ public class ListarSenha {
                     break;
                 case 3:
                     System.out.println("");
-                    System.out.println("Todas as senhas geradas");
+                    System.out.println("Todas as senhas geradas:");
                     System.out.println("");
-                    try (BufferedReader ler = new BufferedReader(new FileReader(caminhoArquivo))) {
+                    try (BufferedReader ler= new BufferedReader(new FileReader(caminhoArquivo))) {
                         String linha;
                         
                         while((linha= ler.readLine()) != null) {
                             numerolinha++;
                         
                             if (numerolinha<=2) {
-                                continue;}
+                                continue; }
                             
                             linha=linha.trim();
                             String[]campo=linha.split(",");
@@ -94,6 +97,5 @@ public class ListarSenha {
                     } catch (IOException e) {
                         e.printStackTrace(); }
                     break;
-                    
                 default:
                     break; }}}}

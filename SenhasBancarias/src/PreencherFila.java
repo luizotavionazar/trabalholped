@@ -1,17 +1,14 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Queue;
 
 public class PreencherFila {
 
-    // Método para preencher a fila com senhas geradas nas últimas 24 horas e não chamadas
-    public void recebeFila(Queue<String> fila) {
+    public void recebeFila(Queue<String> fila) { //Método para preencher a fila com senhas geradas nas últimas 24 horas e não chamadas
         String caminhoArquivo = "BDsenhas.txt";
         LocalDateTime agora = LocalDateTime.now(); //Data e hora atual
-        LocalDateTime umDiaAtras = agora.minusDays(1); //Subtrai 24 horas
+        LocalDateTime umDiaAtras = agora.minusDays(1); //Hora atual e data de ontem
         
         try (BufferedReader ler = new BufferedReader(new FileReader(caminhoArquivo))) { //Lê o arquivo de senhas
             String linha;

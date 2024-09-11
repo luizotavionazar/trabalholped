@@ -17,12 +17,12 @@ public class ChamarSenha {
         for (String senha : fila) {//retira da fila principal e reparte entre as filas auxiliáreis de acordo com a prioridade
             if (senha.startsWith("PR")) {
                 filaPR.offer(senha);
+                
             } else if (senha.startsWith("CL")) {
                 filaCL.offer(senha);
+
             } else if (senha.startsWith("NC")) {
-                filaNC.offer(senha);
-            }
-        }
+                filaNC.offer(senha); }}
 
         String senha = null;
         if (!filaPR.isEmpty()) {//separa a senha mais prioritária e armazena na variável
